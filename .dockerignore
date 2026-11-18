@@ -1,0 +1,9 @@
+node_modules
+.git
+.idea
+build
+.env
+.env.*
+!.env.example
+tg-bot/data
+**/*.log
