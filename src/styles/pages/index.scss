@@ -1,0 +1,107 @@
+.hero { height: 620px; position: relative; overflow: hidden; border-radius: 12px; background: linear-gradient(180deg, var(--hero-top), var(--hero-bottom)); }
+.mountains { position: absolute; inset: 0; width: 100%; height: 100%; }
+.mountains__sun { fill: var(--sun); }
+.mountains__back { fill: var(--mountain-back); }
+.mountains__snow { fill: var(--snow); }
+.mountains__front { fill: var(--mountain-front); }
+.mountains__cap { fill: var(--snow); }
+:root[data-theme="dark"] .mountains__cap { fill: #abcbd7; }
+.mountains__hill { fill: var(--hill); }
+.mountains__base { fill: var(--ground); }
+.hero__content { position: relative; padding: 100px 96px; max-width: 640px; }
+.hero .eyebrow, .app-copy .eyebrow { display: flex; align-items: center; gap: 10px; }
+.hero .eyebrow::before, .app-copy .eyebrow::before { content: ""; width: 25px; height: 1px; background: var(--highlight); }
+.hero h1 { font-size: 76px; line-height: 1.06; margin: 25px 0 18px; letter-spacing: -.055em; }
+.hero h1 span { color: var(--highlight); }
+.hero .lead { max-width: 430px; font-size: 17px; line-height: 1.7; margin-bottom: 30px; }
+.hero .button { gap: 24px; min-height: 55px; min-width: 190px; }
+.hero__note { font-size: 12px; color: var(--muted); margin-top: 14px; }
+.section-caption { position: absolute; bottom: 22px; right: 32px; margin: 0; font-size: 9px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--muted); }
+.features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px; padding-block: 55px 60px; }
+.feature { display: flex; align-items: flex-start; gap: 16px; }
+.feature__icon { display: grid; place-items: center; flex: 0 0 40px; height: 40px; border: 1px solid var(--border); color: var(--highlight); border-radius: 50%; }
+.feature h2 { font-size: 14px; letter-spacing: -.02em; margin: 3px 0 8px; }
+.feature p { font-size: 13px; color: var(--muted); margin: 0; }
+.app-section { min-height: 760px; display: grid; grid-template-columns: 1fr 1fr; align-items: center; position: relative; padding: 76px; gap: 80px; background: var(--panel); border-radius: 12px; margin-top: 36px; margin-bottom: 90px; }
+.app-copy h2 { margin: 20px 0 32px; max-width: 430px; }
+.app-copy .lead { font-size: 15px; max-width: 450px; margin-bottom: 58px; }
+.steps { list-style: none; counter-reset: step; margin: 0 0 38px; padding: 0; color: var(--muted); }
+.steps li { counter-increment: step; display: flex; align-items: center; gap: 14px; margin-bottom: 22px; }
+.steps li::before { content: counter(step, decimal-leading-zero); display: grid; place-items: center; flex: 0 0 30px; height: 30px; background: var(--surface); color: var(--highlight); border-radius: 50%; font-size: 11px; font-weight: 700; }
+.app-hint { font-size: 10px; color: var(--muted); margin: 0; }
+.phone { position: relative; justify-self: center; width: 280px; min-height: 566px; padding: 0; overflow: hidden; border: 7px solid #fff; border-radius: 40px; background: #fafdff; color: #102f53; box-shadow: 0 20px 65px rgb(60 108 135 / 23%); color-scheme: light; }
+.phone-status { padding: 12px 20px 20px; display: flex; justify-content: space-between; font-size: 9px; font-weight: 700; }
+.phone-header { display: flex; justify-content: space-between; align-items: center; padding: 4px 20px 14px; }
+.phone-header .logo { font-size: 20px; gap: 6px; }
+.phone-header .brand-mark { width: 28px; height: 20px; }
+.phone-header button { border: 0; background: none; color: #56738d; min-width: 32px; min-height: 32px; }
+.phone-landscape { position: relative; height: 155px; background: #f1f9fc; overflow: hidden; }
+.phone-landscape .mountains { width: 100%; height: 155px; left: 0; top: 0; --sun: #fff; --mountain-back: #cbe5f1; --mountain-front: #d6ecf5; --snow: #fff; --hill: #d9eff6; --ground: #eff9fc; }
+.phone-landscape .mountains__cap { fill: #fff !important; }
+.phone-content { padding: 16px 20px 22px; text-align: center; }
+.connection-status { font-size: 10px; color: #56738d; margin: 0 0 6px; }
+.connection-status::before { content: "●"; color: #8aa8b7; padding-right: 6px; }
+.phone h3 { font-size: 23px; margin-bottom: 6px; }
+.phone-note { font-size: 11px; color: #56738d; min-height: 18px; margin-bottom: 16px; }
+.connect-button { width: 100%; border: 0; border-radius: 12px; min-height: 42px; background: #17568e; color: #fff; font-size: 12px; font-weight: 700; }
+.location { min-height: 59px; width: 100%; display: flex; align-items: center; gap: 10px; text-align: left; background: none; border: 1px solid #d5e5ed; border-radius: 12px; padding: 10px 12px; margin-top: 12px; }
+.location small, .location strong { display: block; }
+.location small { font-size: 9px; color: #56738d; }
+.location strong { font-size: 11px; }
+.location > span:last-child { margin-left: auto; }
+.phone-tabs { display: flex; justify-content: space-around; border-top: 1px solid #e2edf2; padding: 8px; }
+.phone-tabs button { background: none; border: 0; font-size: 9px; color: #56738d; min-height: 32px; }
+.phone-tabs button:first-child { color: #17568e; }
+.demo-info { margin: 0; padding: 8px 16px; font-size: 11px; background: #e8f3f8; }
+.pricing { padding: 58px 0 48px; text-align: center; }
+.pricing h2 { margin: 18px 0 14px; }
+.pricing > .lead { font-size: 16px; }
+.plans { max-width: 1100px; margin: 39px auto 26px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; text-align: left; }
+.plan { position: relative; padding: 36px 32px 26px; border: 1px solid var(--border); border-radius: 17px; background: var(--surface); }
+.plan--popular { background: var(--popular); border-color: var(--popular-border); box-shadow: 0 20px 36px rgb(40 79 103 / 5%); }
+.plan-badge { position: absolute; top: -13px; right: 24px; padding: 4px 13px; background: var(--accent); color: var(--on-accent); font-size: 9px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; border-radius: 15px; }
+.plan h3 { font-size: 24px; margin-bottom: 8px; }
+.plan-description { color: var(--muted); font-size: 13px; min-height: 21px; }
+.plan-price { margin: 42px 0 0; white-space: nowrap; }
+.plan-price strong { font-size: 40px; line-height: 1.2; letter-spacing: -.07em; }
+.plan-price span { font-size: 13px; color: var(--muted); margin-left: 7px; }
+.plan-billing { font-size: 10px; color: var(--muted); margin: 4px 0 22px; }
+.plan .button { width: 100%; font-size: 13px; }
+.plan ul { border-top: 1px solid var(--border); margin: 24px 0 0; padding: 22px 0 0; list-style: none; color: var(--muted); font-size: 13px; }
+.plan li { margin: 4px 0 8px; }
+.plan li::before { content: "✓"; color: var(--highlight); margin-right: 12px; }
+.pricing-note { color: var(--muted); font-size: 10px; }
+:root[data-theme="dark"] .steps li::before { background: #274a5e; }
+@media (min-width: 1101px) { .phone { transform: translateX(18px); } .app-copy { transform: translateY(-7px); } }
+@media (max-width: 1100px) {
+  .hero__content { padding: 90px 50px; max-width: 590px; }
+  .app-section { gap: 32px; padding: 64px 40px; }
+  .plan { padding: 30px 20px; }
+}
+@media (max-width: 900px) {
+  .hero h1 { font-size: 62px; }
+  .hero__content { padding: 70px 32px; max-width: 530px; }
+  .features { gap: 24px; }
+  .feature { flex-direction: column; }
+  .app-section { padding: 56px 28px 70px; gap: 24px; }
+  .app-copy h2 { font-size: 40px; }
+  .phone { width: 260px; }
+  .plans { grid-template-columns: 1fr; max-width: 480px; gap: 30px; }
+}
+@media (max-width: 600px) {
+  .hero { height: 650px; }
+  .hero__content { padding: 48px 24px; }
+  .hero h1 { font-size: clamp(40px, 10vw, 60px); }
+  .hero .lead { font-size: 14px; }
+  .hero > .mountains { opacity: .55; }
+  .hero__note { max-width: 220px; }
+  .section-caption { font-size: 8px; right: 16px; left: 16px; text-align: right; }
+  .features { grid-template-columns: 1fr; padding-block: 32px; gap: 24px; }
+  .feature { flex-direction: row; }
+  .app-section { grid-template-columns: 1fr; padding: 44px 24px 60px; margin-top: 16px; margin-bottom: 36px; gap: 40px; }
+  .app-copy h2 { font-size: 36px; }
+  .app-copy .lead { margin-bottom: 32px; }
+  .phone { width: min(280px, 100%); }
+  .pricing { padding-top: 36px; }
+  .pricing h2 { font-size: 36px; }
+}

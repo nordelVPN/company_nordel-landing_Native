@@ -1,0 +1,14 @@
+<section class="hero container" id="why-nordel" aria-labelledby="hero-title">
+  {{> mountains}}
+  <div class="hero__content">
+    <p class="eyebrow">{{hero.eyebrow}}</p>
+    <h1 id="hero-title">{{hero.title}}<br><span>{{hero.accent}}</span></h1>
+    <p class="lead">{{hero.description}}</p>
+    <a class="button" href="#app">{{hero.button}} <span aria-hidden="true">↗</span></a>
+    <p class="hero__note">{{hero.note}}</p>
+  </div>
+  <p class="section-caption">{{hero.caption}}</p>
+</section>
+<div class="features container">
+  {{#each features}}<article class="feature"><span class="feature__icon" aria-hidden="true">{{icon}}</span><div><h2>{{title}}</h2><p>{{description}}</p></div></article>{{/each}}
+</div>

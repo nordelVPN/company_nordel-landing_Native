@@ -1,0 +1,28 @@
+<section class="app-section container" id="app" aria-labelledby="app-title">
+  <div class="app-copy">
+    <p class="eyebrow">{{app.eyebrow}}</p>
+    <h2 id="app-title">{{app.title}}<br>{{app.titleEnd}}</h2>
+    <p class="lead">{{app.description}}</p>
+    <ol class="steps">{{#each app.steps}}<li>{{this}}</li>{{/each}}</ol>
+    <p class="app-hint">{{app.hint}}</p>
+  </div>
+  <div class="phone" data-app-preview>
+    <div class="phone-status" aria-hidden="true"><span>9:41</span><span>● ▰</span></div>
+    <div class="phone-header"><span class="logo">{{> logo}}</span><button type="button" data-demo-info aria-label="Preview menu">☰</button></div>
+    <div class="phone-landscape">{{> mountains phone=true}}</div>
+    <div class="phone-content">
+      <p class="connection-status" data-connection-status aria-live="polite">{{app.status}}</p>
+      <h3 data-connection-heading>{{app.heading}}</h3>
+      <p class="phone-note" data-connection-note>{{app.note}}</p>
+      <button class="connect-button" type="button" data-connect aria-pressed="false"
+        data-on="{{app.disconnect}}" data-off="{{app.connect}}"
+        data-status-on="{{app.connectedStatus}}" data-status-off="{{app.status}}"
+        data-heading-on="{{app.connectedHeading}}" data-heading-off="{{app.heading}}"
+        data-note-on="{{app.connectedNote}}" data-note-off="{{app.note}}">{{app.connect}}</button>
+      <button class="location" type="button" data-demo-info><span aria-hidden="true">◉</span><span><small>{{app.locationLabel}}</small><strong>{{app.location}}</strong></span><span aria-hidden="true">⌄</span></button>
+    </div>
+    <nav class="phone-tabs" aria-label="App preview">{{#each app.tabs}}<button type="button" data-demo-info>{{this}}</button>{{/each}}</nav>
+    <p class="demo-info" data-demo-notice hidden role="status">{{app.demoNotice}}</p>
+  </div>
+  <p class="section-caption">{{app.caption}}</p>
+</section>

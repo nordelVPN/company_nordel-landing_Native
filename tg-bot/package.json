@@ -1,0 +1,6 @@
+{
+  "name": "nordel-wishlist-bot",
+  "private": true,
+  "type": "module",
+  "scripts": { "start": "node index.mjs" }
+}

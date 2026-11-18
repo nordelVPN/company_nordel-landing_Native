@@ -1,0 +1,5 @@
+<section class="pricing container" id="pricing" aria-labelledby="pricing-title">
+  <p class="eyebrow">{{pricing.eyebrow}}</p><h2 id="pricing-title">{{pricing.title}}</h2><p class="lead">{{pricing.description}}</p>
+  <div class="plans">{{#each pricing.plans}}{{> plan-card}}{{/each}}</div>
+  <p class="pricing-note">{{pricing.note}}</p>
+</section>

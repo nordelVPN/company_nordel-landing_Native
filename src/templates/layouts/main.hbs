@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="{{lang}}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{title}}</title>
+  <meta name="description" content="{{description}}">
+  {{#if canonical}}<link rel="canonical" href="{{canonical}}">{{/if}}
+  <meta name="color-scheme" content="light dark">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  {{> header}}
+  <main id="main-content">{{{body}}}</main>
+  {{> footer}}
+  {{> wishlist}}
+</body>
+</html>

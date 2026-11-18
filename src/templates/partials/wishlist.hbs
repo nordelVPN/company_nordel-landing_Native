@@ -1,0 +1,5 @@
+<dialog class="wishlist" data-wishlist aria-labelledby="wishlist-title" lang="en">
+  <button class="dialog-close" type="button" data-wishlist-close aria-label="{{wishlist.close}}">×</button>
+  <h2 id="wishlist-title">{{wishlist.title}}</h2><p>{{wishlist.description}}</p>
+  {{#if wishlist.telegramUrl}}<a class="button" href="{{wishlist.telegramUrl}}" target="_blank" rel="noopener noreferrer">{{wishlist.buttonText}}</a>{{else}}<button class="button" type="button" disabled>{{wishlist.buttonText}}</button>{{/if}}
+</dialog>

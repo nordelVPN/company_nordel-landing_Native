@@ -1,0 +1,8 @@
+<article class="plan{{#if popular}} plan--popular{{/if}}">
+  {{#if popular}}<span class="plan-badge">{{@root.pricing.badge}}</span>{{/if}}
+  <h3>{{name}}</h3><p class="plan-description">{{description}}</p>
+  <p class="plan-price"><strong>{{price}}</strong> <span>{{@root.pricing.period}}</span></p>
+  <p class="plan-billing">{{@root.pricing.billing}}</p>
+  <button class="button{{#unless popular}} button--secondary{{/unless}}" type="button" data-wishlist-open aria-label="{{@root.pricing.button}}: {{name}}">{{@root.pricing.button}} ↗</button>
+  <ul>{{#each features}}<li>{{this}}</li>{{/each}}</ul>
+</article>
