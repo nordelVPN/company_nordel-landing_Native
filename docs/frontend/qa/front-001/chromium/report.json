@@ -1,0 +1,129 @@
+{
+  "engine": "chromium",
+  "checks": [
+    {
+      "theme": "light",
+      "width": 375,
+      "measurements": {
+        "width": 375,
+        "scrollWidth": 375,
+        "reducedMotion": "auto",
+        "outside": []
+      },
+      "interactionChecks": "passed",
+      "focusOutlineObserved": "solid",
+      "errors": []
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "measurements": {
+        "width": 768,
+        "scrollWidth": 768,
+        "reducedMotion": "auto",
+        "outside": []
+      },
+      "interactionChecks": "passed",
+      "focusOutlineObserved": "solid",
+      "errors": []
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "measurements": {
+        "width": 1440,
+        "scrollWidth": 1440,
+        "reducedMotion": "auto",
+        "outside": []
+      },
+      "interactionChecks": "passed",
+      "focusOutlineObserved": "solid",
+      "errors": []
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "measurements": {
+        "width": 375,
+        "scrollWidth": 375,
+        "reducedMotion": "auto",
+        "outside": []
+      },
+      "interactionChecks": "passed",
+      "focusOutlineObserved": "solid",
+      "errors": []
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "measurements": {
+        "width": 768,
+        "scrollWidth": 768,
+        "reducedMotion": "auto",
+        "outside": []
+      },
+      "interactionChecks": "passed",
+      "focusOutlineObserved": "solid",
+      "errors": []
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "measurements": {
+        "width": 1440,
+        "scrollWidth": 1440,
+        "reducedMotion": "auto",
+        "outside": []
+      },
+      "interactionChecks": "passed",
+      "focusOutlineObserved": "solid",
+      "errors": []
+    }
+  ],
+  "comparisons": [
+    {
+      "name": "light-screen-1",
+      "width": 1440,
+      "height": 864,
+      "meanChannelDifference": 3.7237820430384088,
+      "note": "Diagnostic only: no visual acceptance threshold."
+    },
+    {
+      "name": "light-screen-2",
+      "width": 1440,
+      "height": 1050,
+      "meanChannelDifference": 2.5240207231040563,
+      "note": "Diagnostic only: no visual acceptance threshold."
+    },
+    {
+      "name": "light-screen-3",
+      "width": 1440,
+      "height": 1050,
+      "meanChannelDifference": 3.0066086860670196,
+      "note": "Diagnostic only: no visual acceptance threshold."
+    },
+    {
+      "name": "dark-screen-1",
+      "width": 1440,
+      "height": 875,
+      "meanChannelDifference": 4.932204232804232,
+      "note": "Diagnostic only: no visual acceptance threshold."
+    },
+    {
+      "name": "dark-screen-2",
+      "width": 1440,
+      "height": 1050,
+      "meanChannelDifference": 3.9387581569664905,
+      "note": "Diagnostic only: no visual acceptance threshold."
+    },
+    {
+      "name": "dark-screen-3",
+      "width": 1440,
+      "height": 1050,
+      "meanChannelDifference": 3.523902777777778,
+      "note": "Diagnostic only: no visual acceptance threshold."
+    }
+  ],
+  "errors": [],
+  "version": "157.0.8103.79"
+}
