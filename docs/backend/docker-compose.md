@@ -23,7 +23,6 @@ Copy-Item .env.example .env
 - TELEGRAM_BOT_TOKEN — токен тестового бота из BotFather.
 - TELEGRAM_WEBHOOK_SECRET — случайная строка, 1–256 символов A–Z, a–z, 0–9, _ или -.
 - NGROK_AUTHTOKEN — токен аккаунта ngrok.
-- NGROK_URL — HTTPS dev domain из панели ngrok, например https://your-domain.ngrok-free.app.
 - SITE_PORT — локальный порт сайта, по умолчанию 3000.
 
 Секрет можно сгенерировать командой, если установлен Node.js:
@@ -46,6 +45,7 @@ docker compose logs --tail 50 bot ngrok
 ```
 
 Откройте http://localhost:3000 (либо порт SITE_PORT).
+В http://localhost:4040 скопируйте назначенный ngrok публичный HTTPS-адрес и используйте его вместо https://your-domain.ngrok-free.app во всех командах ниже.
 Проверьте локальный и публичный HTTP-сервер бота:
 
 ```powershell
@@ -53,8 +53,28 @@ Invoke-WebRequest http://localhost:8080/health
 Invoke-WebRequest https://your-domain.ngrok-free.app/health
 ```
 
-Ожидается статус 200 и текст ok. Подставляйте свой NGROK_URL во все примеры.
+Ожидается статус 200 и текст ok. Подставляйте публичный адрес из панели ngrok во все примеры.
 Порт 8080 опубликован только на loopback для локальной диагностики; ngrok обращается к боту по внутренней сети Compose. Сайт через этот туннель не публикуется.
+
+## Панель ngrok на localhost:4040
+
+Откройте http://localhost:4040 после успешного запуска ngrok. Панель показывает публичный HTTPS-адрес туннеля и журнал HTTP-запросов с ответами, включая POST /webhook от Telegram.
+
+Конфигурация docker/ngrok.yml задаёт agent.web_addr: 0.0.0.0:4040 внутри контейнера. Compose публикует панель только локально: 127.0.0.1:4040:4040. Публичный туннель по-прежнему направлен на bot:8080.
+
+Чтобы применить эти настройки к существующему контейнеру:
+
+```powershell
+docker compose up -d --force-recreate ngrok
+docker compose logs --tail 50 ngrok
+Invoke-WebRequest http://localhost:4040
+```
+
+Скопируйте публичный адрес из панели для команды регистрации webhook ниже. После регистрации отправьте /start боту: в панели должен появиться POST /webhook с ответом 200.
+
+Compose запускает ngrok без --url: dev domain аккаунта выбирается автоматически. NGROK_URL больше не требуется; оставшееся значение в .env не используется. При ERR_NGROK_313 после обновления Compose пересоздайте контейнер ngrok командой выше: старый контейнер может продолжать запускаться с --url. Для проверки аргументов выполните docker compose config --no-interpolate (без раскрытия токенов); в command сервиса ngrok не должно быть --url или --subdomain.
+
+Если панель не открывается, проверьте логи ngrok и занятость локального порта 4040. Панель может содержать сообщения и секретный заголовок webhook; не публикуйте её через туннель.
 
 ## Подключение Telegram webhook
 
@@ -117,7 +137,7 @@ docker compose down
 ## Диагностика
 
 - Compose сообщает о переменной: заполните соответствующее поле .env.
-- ngrok не подключается: проверьте authtoken, dev domain и docker compose logs ngrok.
+- ngrok не подключается: проверьте authtoken и docker compose logs ngrok.
 - Сайт не открывается: проверьте SITE_PORT и docker compose logs site.
 - /health работает, бот молчит: проверьте info, публичный URL, токен и секрет; убедитесь, что другой процесс не использует этого бота.
 - 403 от /webhook: секреты не совпадают; пересоздайте bot и повторите set.
@@ -130,5 +150,6 @@ docker compose down
 - Telegram Bot API, setWebhook: https://core.telegram.org/bots/api#setwebhook
 - Telegram, polling и webhook: https://core.telegram.org/bots/faq
 - ngrok в Docker: https://ngrok.com/download/docker
+- Автоматический dev domain: https://ngrok.com/docs/gateway/domains
 
 Эта инструкция описывает ручную проверку. Создание файлов само по себе не подтверждает сборку контейнеров и реальную доставку сообщений Telegram.
