@@ -1,5 +1,5 @@
-<dialog class="wishlist" data-wishlist aria-labelledby="wishlist-title" lang="en">
-  <button class="dialog-close" type="button" data-wishlist-close aria-label="{{wishlist.close}}">×</button>
-  <h2 id="wishlist-title">{{wishlist.title}}</h2><p>{{wishlist.description}}</p>
-  {{#if wishlist.telegramUrl}}<a class="button" href="{{wishlist.telegramUrl}}" target="_blank" rel="noopener noreferrer">{{wishlist.buttonText}}</a>{{else}}<button class="button" type="button" disabled>{{wishlist.buttonText}}</button>{{/if}}
+<dialog class="wishlist" data-wishlist aria-labelledby="wishlist-title">
+  <button class="dialog-close" type="button" data-wishlist-close aria-label="{{wishlist.close}}" data-i18n-aria-label="wishlist.close">×</button>
+  <h2 id="wishlist-title" data-i18n="wishlist.title">{{wishlist.title}}</h2><p data-i18n="wishlist.description">{{wishlist.description}}</p>
+  {{#if wishlist.telegramUrl}}<a class="button" href="{{wishlist.telegramUrl}}" target="_blank" rel="noopener noreferrer" data-i18n="wishlist.buttonText">{{wishlist.buttonText}}</a>{{else}}<button class="button" type="button" disabled data-i18n="wishlist.buttonText">{{wishlist.buttonText}}</button>{{/if}}
 </dialog>

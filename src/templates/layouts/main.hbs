@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{title}}</title>
-  <meta name="description" content="{{description}}">
+  <title data-i18n="{{#if landing}}index{{else}}about{{/if}}.title">{{title}}</title>
+  <meta name="description" data-i18n-content="{{#if landing}}index{{else}}about{{/if}}.description" content="{{description}}">
   {{#if canonical}}<link rel="canonical" href="{{canonical}}">{{/if}}
   <meta name="color-scheme" content="light dark">
 </head>
 <body>
-  <a class="skip-link" href="#main-content">Skip to content</a>
+  <a class="skip-link" href="#main-content"><span data-i18n="skip">Skip to content</span></a>
   {{> header}}
   <main id="main-content">{{{body}}}</main>
   {{> footer}}
