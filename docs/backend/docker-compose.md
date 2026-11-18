@@ -3,11 +3,11 @@
 ## Состав
 
 - site: production-сборка Webpack, раздаваемая Nginx на http://localhost:3000.
-- bot: Node.js 22, HTTP webhook на /webhook, проверка доступности на /health.
+- bot: PHP 8.4, HTTP webhook на /webhook, проверка доступности на /health.
 - ngrok: отдельный контейнер с HTTPS-туннелем к bot:8080.
 - wishlist: именованный volume с /data/wishlist.json.
 
-Compose использует tg-bot/webhook.mjs. PHP-бот и index.mjs — альтернативные реализации с long polling; одновременно с webhook их запускать нельзя. Отдельной БД нет. Один экземпляр webhook последовательно обрабатывает запросы и атомарно заменяет JSON-файл. Для нескольких экземпляров нужна БД.
+Compose использует tg-bot/webhook.php и общий модуль common.php. bot.php — альтернативный PHP-режим long polling; одновременно с webhook его запускать нельзя. Отдельной БД нет. Один экземпляр webhook последовательно обрабатывает запросы и атомарно заменяет JSON-файл. Для нескольких экземпляров нужна БД. Встроенный PHP HTTP-сервер используется для локального тестирования через ngrok; для production нужен PHP-FPM с Nginx или другой production-сервер.
 
 ## Подготовка
 
@@ -25,10 +25,10 @@ Copy-Item .env.example .env
 - NGROK_AUTHTOKEN — токен аккаунта ngrok.
 - SITE_PORT — локальный порт сайта, по умолчанию 3000.
 
-Секрет можно сгенерировать командой, если установлен Node.js:
+Секрет можно сгенерировать в PowerShell:
 
 ```powershell
-node -e "console.log(require('node:crypto').randomBytes(32).toString('hex'))"
+[guid]::NewGuid().ToString("N") + [guid]::NewGuid().ToString("N")
 ```
 
 .env исключён из Git и Docker build context. Не добавляйте реальные токены в документацию, исходники или команды. Переменные контейнера доступны пользователям с доступом к Docker.
@@ -81,8 +81,8 @@ Compose запускает ngrok без --url: dev domain аккаунта вы�
 Регистрация выполняется явно, после запуска туннеля:
 
 ```powershell
-docker compose exec bot node webhook-admin.mjs set https://your-domain.ngrok-free.app
-docker compose exec bot node webhook-admin.mjs info
+docker compose exec bot php webhook-admin.php set https://your-domain.ngrok-free.app
+docker compose exec bot php webhook-admin.php info
 ```
 
 Скрипт добавляет /webhook к URL и передаёт Telegram secret_token. Входящие запросы проверяются по X-Telegram-Bot-Api-Secret-Token. Регистрация webhook меняет способ получения обновлений для указанного бота: используйте тестового бота, если основной уже работает в другом окружении.
@@ -99,11 +99,11 @@ Webhook не регистрируется автоматически при ст
 6. Проверьте сохранение данных:
 
 ```powershell
-docker compose exec bot node -e "const fs=require('node:fs'); const u=JSON.parse(fs.readFileSync('/data/wishlist.json','utf8')); console.log({users:u.length,uniqueIds:new Set(u.map(x=>x.telegramId)).size})"
+docker compose exec bot cat /data/wishlist.json
 docker compose restart bot
 ```
 
-Повторите команду подсчёта после перезапуска: данные должны сохраниться.
+Проверьте, что telegramId не повторяются. Повторите чтение файла после перезапуска: данные должны сохраниться.
 Для проверки защиты запрос без секретного заголовка должен получить 403:
 
 ```powershell
@@ -113,6 +113,18 @@ curl.exe -i -X POST http://localhost:8080/webhook -H "Content-Type: application/
 /health проверяет только HTTP-процесс. Это не проверка токена, доступности Telegram или записи в volume. Полный сценарий подтверждается реальным /start.
 
 Telegram может повторить доставку после ошибки или таймаута. Пользователь сохраняется без дубликата, но приветствие при повторной доставке может прийти повторно. История обработанных update_id не хранится. JSON предназначен для небольшого тестового вишлиста.
+
+## Переход с Node.js на PHP
+
+Пересоберите bot и пересоздайте ngrok после его запуска:
+
+```powershell
+docker compose up -d --build bot
+docker compose up -d --force-recreate ngrok
+docker compose exec bot php -v
+```
+
+Данные остаются в том же volume wishlist, формат JSON сохранён. Не используйте down -v. Скопируйте текущий публичный URL из localhost:4040 и выполните set и info командами PHP выше. Старые команды node webhook-admin.mjs больше не применяются.
 
 ## Обновление, остановка и возврат к polling
 
@@ -125,14 +137,14 @@ docker compose down
 down сохраняет volume. Команда down -v удаляет вишлист — не используйте её, если данные нужны.
 Остановка контейнеров не удаляет webhook в Telegram.
 
-Перед возвратом к PHP/Node polling удалите webhook, пока bot работает:
+Перед возвратом к PHP polling удалите webhook, пока bot работает:
 
 ```powershell
-docker compose exec bot node webhook-admin.mjs delete
+docker compose exec bot php webhook-admin.php delete
 docker compose down
 ```
 
-После этого запускайте только одну polling-реализацию. Pending updates при set/delete намеренно не удаляются.
+После этого запускайте php tg-bot/bot.php с переменными окружения TELEGRAM_BOT_TOKEN и WISHLIST_FILE. Pending updates при set/delete намеренно не удаляются.
 
 ## Диагностика
 

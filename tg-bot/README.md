@@ -1,20 +1,33 @@
-# Telegram-бот: задача и развитие
+# Telegram-бот на PHP
 
-Статус: MVP реализован на PHP. Адрес бота и токен задаются при развёртывании.
+Бэкенд работает на PHP 8.4. Node.js нужен только для сборки сайта.
 
-## Запуск MVP
+## Docker и webhook
 
-Нужен PHP 8.0+ с включённым HTTPS stream wrapper и токен, полученный в BotFather. Токен не добавляется в репозиторий.
+Инструкция запуска и ручного тестирования: [docs/backend/docker-compose.md](../docs/backend/docker-compose.md).
 
-Запуск: TELEGRAM_BOT_TOKEN=... php tg-bot/bot.php
+- common.php — Telegram API, обработка /start и JSON-хранилище.
+- webhook.php — HTTP-маршруты POST /webhook и GET /health.
+- webhook-admin.php — CLI-команды set, info, delete.
+- bot.php — альтернативный режим long polling.
 
-При /start бот сохраняет telegramId, username, имя, фамилию и даты первого/последнего обращения в JSON-файл, затем отправляет пользователю приветствие. Повторный /start не создаёт дубликат.
+В Compose бот слушает порт 8080, ngrok публикует его в интернете. Панель ngrok: http://localhost:4040.
 
-Для production JSON-хранилище следует заменить на PostgreSQL или SQLite с резервным копированием.
+После запуска зарегистрируйте публичный адрес:
 
-## Дальнейшее развитие
+```powershell
+docker compose exec bot php webhook-admin.php set https://ВАШ-ДОМЕН
+docker compose exec bot php webhook-admin.php info
+```
 
-- рассылка уведомления пользователям wishlist при запуске;
-- админская команда или отдельный скрипт для рассылки;
-- перенос хранения в PostgreSQL/SQLite;
-- webhook и процесс-менеджер для production.
+Скрипт добавит /webhook и зарегистрирует секрет. Токен и секрет берутся из окружения контейнера.
+
+## Long polling
+
+Перед запуском polling удалите webhook командой php webhook-admin.php delete и остановите HTTP-бота. Затем запустите php tg-bot/bot.php с TELEGRAM_BOT_TOKEN и WISHLIST_FILE в окружении. Одновременно два режима не запускают.
+
+При /start бот сохраняет telegramId, username, имя, фамилию и даты первого/последнего обращения, затем отправляет приветствие. Повторный /start не создаёт дубликат пользователя. Хранилище совместимо с прежним JSON.
+
+## Ограничения
+
+Встроенный PHP HTTP-сервер предназначен для локального тестирования. Для production используйте PHP-FPM с Nginx и БД с резервным копированием. Telegram может повторить доставку: пользователь сохранится один раз, приветствие может повториться.
